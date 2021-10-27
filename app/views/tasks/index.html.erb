@@ -1,0 +1,176 @@
+<head>
+  <style>
+      tr{
+          height: 10vh;
+      }
+      ul{
+          border: 1px solid #e7e7e7;
+          background-color: #e7a1a1;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+      }
+      li{
+          float: left;
+      }
+      li button{
+          display: block;
+          padding: 8px;
+          color: grey;
+          border: none;
+      }
+      button:hover{
+          color: white;
+          background-color: #04AA6D;
+      }
+      li button:hover {
+          background-color: #e7a1a1;
+      }
+  </style>
+</head>
+  <div class="all" id="all">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button class="nav-link all-link" aria-current="page" id="all_btn">All</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link active progress-link" id="progress_btn">In Progress</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link active complete-link" id="complete_btn">Complete</button>
+      </li>
+    </ul>
+    <div id="target">
+      <div>
+        <table class="table">
+          <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>FromUser</th>
+            <th>ToUser</th>
+            <th>At Time</th>
+            <th>Option</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @tasks.each do |task| %>
+            <tr class="table">
+              <td><%= task.name %></td>
+              <td><%= task.type.name %></td>
+              <td><%= task.status.name %></td>
+              <td><%= task.from.username %></td>
+              <td><%= task.to.username %></td>
+              <td><%= task.created_at %></td>
+              <td><%= link_to "Edit", edit_task_path(task.id) %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="progress tabs" id="progress">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button class="nav-link active all-link" aria-current="page" id="all_btn">All</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link progress-link" id="progress_btn">In Progress</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link active complete-link" id="complete_btn">Complete</button>
+      </li>
+    </ul>
+    <table class="table">
+      <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>FromUser</th>
+        <th>ToUser</th>
+        <th>At Time</th>
+        <th>Option</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+        <% if task.status_id == 1 %>
+          <tr class="table">
+            <td><%= task.name %></td>
+            <td><%= task.type.name %></td>
+            <td><%= task.status.name %></td>
+            <td><%= task.from.username %></td>
+            <td><%= task.to.username %></td>
+            <td><%= task.created_at %></td>
+            <td><%= link_to "Edit", edit_task_path(task.id) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="complete tabs" id="complete">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <button class="nav-link active all-link" aria-current="page" id="all_btn" >All</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link active progress-link" id="progress_btn">In Progress</button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link complete-link" id="complete_btn">Complete</button>
+      </li>
+    </ul>
+    <table class="table">
+      <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>FromUser</th>
+        <th>ToUser</th>
+        <th>At Time</th>
+        <th>Option</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @tasks.each do |task| %>
+        <% if task.status_id == 2 %>
+          <tr class="table">
+            <td><%= task.name %></td>
+            <td><%= task.type.name %></td>
+            <td><%= task.status.name %></td>
+            <td><%= task.from.username %></td>
+            <td><%= task.to.username %></td>
+            <td><%= task.created_at %></td>
+            <td><%= link_to "Edit", edit_task_path(task.id) %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<script type="text/javascript">
+    $('.progress').hide();
+    $('.complete').hide();
+     $(".all-link").click(function () {
+         $('.progress').hide();
+         $('.complete').hide();
+         $('.all').show();
+     });
+      $(".progress-link").click(function () {
+          $('.progress').show();
+          $('.complete').hide();
+          $('.all').hide();
+      });
+      $(".complete-link").click(function () {
+          $('.progress').hide();
+          $('.complete').show();
+          $('.all').hide();
+      });
+</script>

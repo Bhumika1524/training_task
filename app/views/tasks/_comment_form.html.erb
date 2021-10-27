@@ -1,0 +1,6 @@
+<div class="nested-fields">
+  <%= f.label :name, "Comment" %><br/>
+  <%= f.text_field :name , readonly: true %>
+  <%= f.hidden_field :task_id, value: @task.id %>
+  <%= link_to_remove_association 'Delete', f %>
+</div>

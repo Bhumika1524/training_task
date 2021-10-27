@@ -1,0 +1,17 @@
+<% if @comment.errors.any? %>
+<% @comment.errors.full_messages.each do |msg| %>
+  <%= msg %>
+<% end %>
+<% end %>
+<% if @comment.present? %>
+  <%= form_for @comment, url: task_comment_path(@task.id, @comment.id) do |f| %>
+    <%= f.label :name, "Comment" %>
+    <br/>
+    <%= f.text_field :name %>
+
+    <br/>
+    <%= f.submit %>
+  <% end %>
+<% else %>
+  <h2>Record not found</h2>
+<% end %>

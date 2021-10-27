@@ -1,0 +1,41 @@
+<head>
+  <style>
+    #comment-div{
+        height: 20vh;
+    }
+    h3{
+        margin-bottom: 20px;
+        padding-bottom: 0px;
+    }
+    #target{
+        height: 70vh;
+    }
+  </style>
+</head>
+<div id="comment-div">
+  <h3>Comments for:- </h3>
+<div id='comments'>
+  <%= select_tag 'task_id', options_for_select(@tasks.collect{ |t| [t.name+", from:- "+t.from.username+", to:- "+t.to.username+", "+t.created_at.to_s, t.id]}), :include_blank => 'Select User' %>
+</div>
+</div>
+<div id="target"></div>
+
+<script>
+  $(document).ready(function (){
+      $("#task_id").on("click", function (){
+          let id = $("#task_id").val();
+          if(id == ""){
+              $("#target").html("");
+          }else {
+              $.ajax({
+                  url: "tasks/" + id,
+                  type: "get",
+                  success: function (data) {
+                  },
+                  error: function (data) {
+                  }
+              })
+          }
+      });
+  });
+</script>

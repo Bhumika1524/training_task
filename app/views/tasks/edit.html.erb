@@ -1,0 +1,58 @@
+<head>
+  <style>
+      form{
+          padding: 20px;
+      }
+  </style>
+</head>
+<%= form_for @task do |form| %>
+  <% if @task.errors.any? %>
+      <% @task.errors.full_messages.each do |message| %>
+        <h3><%= message %></h3>
+      <% end %>
+  <% end %>
+  <% if @task.from_id == current_user.id %>
+
+    <%= form.label :name, "Task Name: " %>
+    <%= form.text_field :name %><br/><br/>
+
+    <div>
+      <%= form.hidden_field :from_id, value: current_user.id %>
+    </div>
+
+    <div id='users'>
+      <%= form.label :to_id, 'Assign To: ' %>
+      <%= form.select :to_id, options_from_collection_for_select(@users, 'id', 'username'), class: "btn" %>
+    </div>
+    <br/>
+
+    <div id='task_types'>
+      <%= form.label :type_id, 'Task Type: ' %>
+      <%= form.select :type_id, options_from_collection_for_select(@task_types, 'id', 'name'), class: "btn btn-secondary dropdown-toggle" %>
+    </div><br/>
+    <div id='task_status'>
+      <%= form.label :status_id, 'Task Status: ' %>
+      <%= form.select :status_id, options_from_collection_for_select(@task_statuses, 'id', 'name'), class: "btn btn-secondary dropdown-toggle" %>
+    </div>
+    <br/>
+    <div>
+      <%= form.fields_for :comments do |t| %>
+        <%= render "comment_form", :f => t %>
+      <% end %>
+      <div>
+  <br>
+  <%= link_to_add_association "Add Comment", form, :comments, class: "link" %>
+  <br/>
+  <%= form.submit 'Submit', class: "btn btn-success" %>
+  </div>
+  </div>
+    <% else %>
+    <div>
+      <br>
+      <%= link_to_add_association "Add Comment", form, :comments, class: "link" %>
+      <br/>
+      <%= form.submit 'Submit', class: "btn btn-success" %>
+    </div>
+    </div>
+    <% end %>
+<% end %>

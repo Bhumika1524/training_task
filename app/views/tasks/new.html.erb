@@ -1,0 +1,70 @@
+<head>
+  <style>
+      form{
+          padding: 20px;
+      }
+  </style>
+</head>
+<%= form_for @task do |form| %>
+  <% if @task.errors.any? %>
+    <% @task.errors.full_messages.each do |message| %>
+      <h3><%= message %></h3>
+    <% end %>
+  <% end %>
+  <%= form.label :name, "Task Name: " %>
+  <%= form.text_field :name %><br/><br/>
+
+  <div id='users'>
+    <%= form.label :to_id, 'Assign To: ' %>
+    <%= form.select :to_id, options_from_collection_for_select(@users, 'id', 'username'), class: "btn btn-secondary dropdown-toggle", :include_blank => 'Select User' %>
+  </div>
+  <br/>
+
+  <div id='task_types'>
+    <%= form.label :type_id, 'Task Type: ' %>
+    <%= form.select :type_id, options_from_collection_for_select(@task_types, 'id', 'name'), class: "btn btn-secondary dropdown-toggle",  :include_blank => 'Select Type' %>
+  </div><br/>
+  <div id='task_status'>
+    <%= form.label :status_id, 'Task Status: ' %>
+    <%=form.select :status_id,  options_from_collection_for_select(@task_statuses, 'id', 'name'), class: "btn btn-secondary dropdown-toggle",  :include_blank => 'Select Status' %>
+  </div>
+  <br/>
+  <div>
+    <%= form.fields_for :comments do |t| %>
+      <%= render "comment_fields", :f => t %>
+    <% end %>
+    <div>
+      <br>
+      <%= link_to_add_association "Add Comment", form, :comments, class: "link" %>
+    </div><br/>
+  </div>
+  <%= form.submit 'Submit',id: "submit",class: "btn btn-success" %>
+<% end %>
+
+<script>
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            let assign = $('#task_to_id');
+            let type = $('#task_type_id');
+            let status = $('#task_status_id');
+            if (assign.val() === '') {
+                alert("Please select User to assign the task!");
+                $('#task_to_id').focus();
+
+                return false;
+            }else if (type.val() === '') {
+                alert("Please select a Task Type !");
+                $('#task_type_id').focus();
+
+                return false;
+            }else if (status.val() === '') {
+                alert("Please select the Task Status !");
+                $('#task_status_id').focus();
+
+                return false;
+            }
+            else return;
+        });
+    });
+
+</script>

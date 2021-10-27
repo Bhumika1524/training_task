@@ -1,0 +1,17 @@
+<head>
+  <style>
+    form{
+        padding: 20px;
+    }
+  </style>
+</head>
+<%= form_for @task_type do |form| %>
+  <% if @task_type.errors.any? %>
+    <% @task_type.errors.full_messages.each do |message| %>
+      <h3><%= message %></h3>
+    <% end %>
+  <% end %>
+  <%= form.label :name, "Type Name :- " %>
+  <%= form.text_field :name %><br/><br/>
+  <%= form.submit 'Submit', class: "btn btn-success"%>
+<% end %>
