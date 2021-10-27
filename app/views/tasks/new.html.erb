@@ -40,31 +40,3 @@
   </div>
   <%= form.submit 'Submit',id: "submit",class: "btn btn-success" %>
 <% end %>
-
-<script>
-    $(document).ready(function () {
-        $("#submit").click(function () {
-            let assign = $('#task_to_id');
-            let type = $('#task_type_id');
-            let status = $('#task_status_id');
-            if (assign.val() === '') {
-                alert("Please select User to assign the task!");
-                $('#task_to_id').focus();
-
-                return false;
-            }else if (type.val() === '') {
-                alert("Please select a Task Type !");
-                $('#task_type_id').focus();
-
-                return false;
-            }else if (status.val() === '') {
-                alert("Please select the Task Status !");
-                $('#task_status_id').focus();
-
-                return false;
-            }
-            else return;
-        });
-    });
-
-</script>
